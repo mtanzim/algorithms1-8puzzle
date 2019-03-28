@@ -26,7 +26,6 @@
  ******************************************************************************/
 
 import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.StdOut;
 
 public class PuzzleChecker {
 
@@ -42,13 +41,14 @@ public class PuzzleChecker {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
                     tiles[i][j] = in.readInt();
+                    // StdOut.println(tiles[i][j]);
                 }
             }
 
             // solve the slider puzzle
-            Board initial = new Board(tiles);
-            Solver solver = new Solver(initial);
-            StdOut.println(filename + ": " + solver.moves());
+            // Board initial = new Board(tiles);
+            // Solver solver = new Solver(initial);
+            // StdOut.println(filename + ": " + solver.moves());
         }
     }
 }
