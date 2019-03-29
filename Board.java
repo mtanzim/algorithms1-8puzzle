@@ -7,7 +7,6 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
-// @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("UUF_UNUSED_FIELD")
 public class Board {
 
     private int[][] tiles;
@@ -23,16 +22,31 @@ public class Board {
         return n;
     }
 
+    // @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("SBSC_USE_STRINGBUFFER_CONCATENATION")
     public String toString() {
-        String retVal = n + "\n ";
+        StringBuilder s = new StringBuilder(n + "\n ");
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                retVal += tiles[i][j] + " ";
+                s.append(tiles[i][j]);
+                s.append(" ");
             }
-            retVal += "\n ";
+            s.append("\n ");
         }
+        return s.toString();
+    }
 
-        return retVal;
+    public boolean isGoal() {
+        int k = 1;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (k == n * n) k = 0;
+                // StdOut.println(
+                //         "Testing i: " + i + " j: " + j + " value: " + tiles[i][j] + " k: " + k);
+                if (tiles[i][j] != k) return false;
+                k++;
+            }
+        }
+        return true;
     }
 
 
@@ -52,6 +66,7 @@ public class Board {
             Board board = new Board(tiles);
             // StdOut.println(board.dimensions());
             StdOut.println(board.toString());
+            StdOut.println(board.isGoal());
             // Solver solver = new Solver(initial);
             // StdOut.println(filename + ": " + solver.moves());
         }
