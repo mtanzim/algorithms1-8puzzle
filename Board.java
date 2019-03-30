@@ -7,6 +7,8 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
+// @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("UUF_UNUSED_FIELD")
+// @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("UUF_UNUSED_FIELD")
 public class Board {
 
     private int[][] tiles;
@@ -22,12 +24,11 @@ public class Board {
         return n;
     }
 
-    // @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("SBSC_USE_STRINGBUFFER_CONCATENATION")
     public String toString() {
         StringBuilder s = new StringBuilder(n + "\n ");
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                s.append(tiles[i][j]);
+                s.append(String.format("%2d ", tiles[i][j]));
                 s.append(" ");
             }
             s.append("\n ");
@@ -40,13 +41,30 @@ public class Board {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (k == n * n) k = 0;
-                // StdOut.println(
-                //         "Testing i: " + i + " j: " + j + " value: " + tiles[i][j] + " k: " + k);
                 if (tiles[i][j] != k) return false;
                 k++;
             }
         }
         return true;
+    }
+
+    public Board twin() {
+
+    }
+
+    public int hamming() {
+        int hamming = 0;
+        int k = 1;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                // when you reached the last tile
+                if (k == n * n) return hamming;
+                if (tiles[i][j] != k) hamming++;
+                k++;
+            }
+        }
+        return hamming;
+
     }
 
 
@@ -67,6 +85,7 @@ public class Board {
             // StdOut.println(board.dimensions());
             StdOut.println(board.toString());
             StdOut.println(board.isGoal());
+            StdOut.println(board.hamming());
             // Solver solver = new Solver(initial);
             // StdOut.println(filename + ": " + solver.moves());
         }
