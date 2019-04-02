@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 public class Board {
 
     private int[][] tiles;
@@ -118,6 +120,7 @@ public class Board {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 // when you reached the last tile
+                // this works because 0 is being considered as being in the wrong place
                 if (k == n * n) return hamming;
                 if (tiles[i][j] != k) hamming++;
                 k++;
@@ -126,6 +129,38 @@ public class Board {
         return hamming;
 
     }
+
+    public int manhattan() {
+        int manhattan = 0;
+        int k = 0; // keeps track of cur_tile
+        // i is y-axis
+        // j is x-axis
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                k++;
+                // StdOut.println("\nk: " + k + " i: " + i + " j: " + j);
+                int curTile = tiles[i][j];
+                // skip over zero
+                if (curTile == 0) continue;
+                if (curTile != k) {
+                    //compute manhattan
+                    int goal_x = (curTile - 1) % n;
+                    int goal_y = (curTile - 1) / n;
+
+                    int curDiff = abs(j - goal_x) + abs(i - goal_y);
+                    // StdOut.println(
+                    //         "curTile: " + curTile + " goal_x: " + goal_x + " goal_y: " + goal_y
+                    //                 + " curDiff: " + curDiff);
+
+                    manhattan += curDiff;
+                }
+
+            }
+
+        }
+        return manhattan;
+    }
+
 
     public Iterable<Board> neighbors() {
         List<Board> nList = new ArrayList<Board>();
@@ -201,7 +236,7 @@ public class Board {
             // StdOut.println(board.dimensions());
             StdOut.println(board.toString());
             StdOut.println(board.isGoal());
-            StdOut.println(board.hamming());
+
             StdOut.println("TWIN");
             StdOut.println(board.twin().toString());
             StdOut.println("ORIG");
@@ -227,6 +262,8 @@ public class Board {
                 StdOut.println(neighbor.toString());
 
             }
+            StdOut.println("hamming: " + board.hamming());
+            StdOut.println("manhattan: " + board.manhattan());
             // board.neighbors();
 
             // Solver solver = new Solver(initial);
