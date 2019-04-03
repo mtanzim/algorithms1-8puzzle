@@ -18,7 +18,42 @@ public class Solver {
 
     public Solver(Board initial) {
         if (initial == null) throw new IllegalArgumentException("Please supply valid board");
+        StdOut.println("Starting with the following board: ");
         StdOut.println(initial.toString());
+
+        Board twin = initial.twin();
+        StdOut.println("Starting with the following twin board: ");
+        StdOut.println(twin.toString());
+
+        class Node {
+            private Board parent;
+            private Board current;
+            private int numMoves;
+
+            public Node(Board argParent, Board argCurrent, int argNumMoves) {
+                parent = argParent;
+                current = argCurrent;
+                numMoves = argNumMoves;
+            }
+
+            public String toString() {
+                String parentString;
+                if (parent == null) {
+                    parentString = "NULL\n";
+                }
+                else {
+                    parentString = parent.toString();
+                }
+                return ("\nparent:\n" + parentString + "\ncurrent:\n" + current.toString()
+                        + "\nnumMoves: " + numMoves + "\n");
+            }
+        }
+
+        StdOut.println("Starting with the following node: ");
+        Node firstNode = new Node(null, initial, 0);
+        StdOut.println(firstNode.toString());
+
+
     }
 
     public int moves() {
