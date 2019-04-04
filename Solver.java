@@ -12,7 +12,7 @@ import java.util.Comparator;
 
 public class Solver {
 
-    private int moves = -1;
+    private int minMoves = -1;
     private boolean isSolvable = false;
     // private List<Board> bList = new ArrayList<Board>();
 
@@ -43,6 +43,10 @@ public class Solver {
                 return parent;
             }
 
+            public int getNumMoves() {
+                return numMoves;
+            }
+
             public String toString(boolean isDebug) {
                 String parentString;
                 // boolean isDebug = false;
@@ -60,50 +64,90 @@ public class Solver {
                         + current.manhattan() + "\n" + current.toString());
             }
 
-            public Comparator<Node> nodeOrder() {
-                class byPriority implements Comparator<Node> {
-                    public int compare(Node A, Node B) {
-                        int priorityA = A.getPriority();
-                        int priorityB = B.getPriority();
-                        if (priorityA < priorityB) return -1;
-                        if (priorityA == priorityA) return 0;
-                        else return 1;
-
-                    }
-                }
-                return new byPriority();
-            }
-
 
         }
+
+
+        // public Comparator<Node> nodeOrder () {
+        class NodeComparator implements Comparator<Node> {
+            public int compare(Node A, Node B) {
+                // StdOut.println("Comparing Nodes:");
+                int priorityA = A.getPriority();
+                int priorityB = B.getPriority();
+                // StdOut.println("A: " + priorityA);
+                // StdOut.println(A.toString(false));
+                // StdOut.println("B: " + priorityB);
+                // StdOut.println(B.toString(false));
+                if (priorityA < priorityB) {
+                    // StdOut.println(" A IS SMALLER");
+                    return -1;
+                }
+                if (priorityA == priorityB) {
+                    // StdOut.println("They are equal!");
+                    return 0;
+                }
+                else {
+                    // StdOut.println(" A IS LARGER ");
+                    return 1;
+                }
+
+
+            }
+        }
+        // return new byPriority();
+        // }
 
 
         if (initial == null) throw new IllegalArgumentException("Please supply valid board");
 
         Node firstNode = new Node(null, initial, 0);
-        Node firstTwin = new Node(null, initial.twin(), 0);
-        StdOut.println(
-                "Starting with the following node with priority : " + firstNode.getPriority());
-        StdOut.println(firstNode.toString(false));
+        // Node firstTwin = new Node(null, initial.twin(), 0);
+        // StdOut.println(
+        //         "Starting with the following node with priority : " + firstNode.getPriority());
+        // StdOut.println(firstNode.toString(false));
         // StdOut.println(
         //         "Starting with the following twin with priority : " + firstTwin.getPriority());
         // StdOut.println(firstTwin.toString(true));
 
-        int i = 0;
-        for (Board neighbor : firstNode.getCurrent().neighbors()) {
-            if (neighbor.equals(firstNode.getParent())) continue;
-            Node curChildNode = new Node(firstNode.getCurrent(), neighbor, 1);
-            StdOut.println("Neighbor: " + i++);
-            StdOut.println(curChildNode.toString(false));
+
+        MinPQ<Node> gamePQ = new MinPQ(new NodeComparator());
+        gamePQ.insert(firstNode);
+        Node curDeq = gamePQ.delMin();
+        // Node curNode = firstNode;
+        // moves = 0;
+        int curMove = curDeq.getNumMoves();
+        while (!curDeq.getCurrent().isGoal()) {
+            if (curMove > 4000) break;
+            // StdOut.println("PQ Size: " + gamePQ.size());
+            // StdOut.println("XXXXXXXXXX Currently processing in numMoves: " + moves + " XXXXXXXXXX");
+            // StdOut.println(curDeq.toString(false));
+            int i = 0;
+            // StdOut.println("===============NEIGHBORS====================");
+            for (Board neighbor : curDeq.getCurrent().neighbors()) {
+                if (neighbor.equals(curDeq.getParent())) continue;
+                Node curChildNode = new Node(curDeq.getCurrent(), neighbor, curMove + 1);
+                // StdOut.println("Neighbor: " + i++);
+                // StdOut.println(curChildNode.toString(false));
+                gamePQ.insert(curChildNode);
+            }
+            // StdOut.println("===============NEIGHBORS END=================");
+            // StdOut.println("PQ Size: " + gamePQ.size());
+            // moves++;
+            // StdOut.println("===============CURRENT PQ MIN=================");
+            // StdOut.println(gamePQ.min().toString(false));
+            curDeq = gamePQ.delMin();
+            curMove = curDeq.getNumMoves();
+            // StdOut.println("===========================================");
+
+
         }
-
-        MinPQ<Node> GamePQ = new MinPQ(firstNode.nodeOrder());
-
+        StdOut.println("SOLVED GAME\n" + curDeq.toString(false));
+        minMoves = curDeq.getNumMoves();
 
     }
 
     public int moves() {
-        return moves;
+        return minMoves;
     }
 
     public boolean isSolvable() {
