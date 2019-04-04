@@ -5,7 +5,10 @@
  **************************************************************************** */
 
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.StdOut;
+
+import java.util.Comparator;
 
 public class Solver {
 
@@ -57,6 +60,20 @@ public class Solver {
                         + current.manhattan() + "\n" + current.toString());
             }
 
+            public Comparator<Node> nodeOrder() {
+                class byPriority implements Comparator<Node> {
+                    public int compare(Node A, Node B) {
+                        int priorityA = A.getPriority();
+                        int priorityB = B.getPriority();
+                        if (priorityA < priorityB) return -1;
+                        if (priorityA == priorityA) return 0;
+                        else return 1;
+
+                    }
+                }
+                return new byPriority();
+            }
+
 
         }
 
@@ -79,6 +96,8 @@ public class Solver {
             StdOut.println("Neighbor: " + i++);
             StdOut.println(curChildNode.toString(false));
         }
+
+        MinPQ<Node> GamePQ = new MinPQ(firstNode.nodeOrder());
 
 
     }
