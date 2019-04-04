@@ -7,51 +7,78 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Solver {
 
     private int moves = -1;
     private boolean isSolvable = false;
-    private List<Board> bList = new ArrayList<Board>();
+    // private List<Board> bList = new ArrayList<Board>();
 
     public Solver(Board initial) {
-        if (initial == null) throw new IllegalArgumentException("Please supply valid board");
-        StdOut.println("Starting with the following board: ");
-        StdOut.println(initial.toString());
-
-        Board twin = initial.twin();
-        StdOut.println("Starting with the following twin board: ");
-        StdOut.println(twin.toString());
 
         class Node {
             private Board parent;
             private Board current;
             private int numMoves;
+            private int priority;
 
             public Node(Board argParent, Board argCurrent, int argNumMoves) {
                 parent = argParent;
                 current = argCurrent;
                 numMoves = argNumMoves;
+                priority = current.manhattan() + numMoves;
             }
 
-            public String toString() {
+            public int getPriority() {
+                return priority;
+            }
+
+            public Board getCurrent() {
+                return current;
+            }
+
+            public Board getParent() {
+                return parent;
+            }
+
+            public String toString(boolean isDebug) {
                 String parentString;
+                // boolean isDebug = false;
+
                 if (parent == null) {
                     parentString = "NULL\n";
                 }
                 else {
                     parentString = parent.toString();
                 }
-                return ("\nparent:\n" + parentString + "\ncurrent:\n" + current.toString()
-                        + "\nnumMoves: " + numMoves + "\n");
+                if (isDebug)
+                    return ("\nparent:\n" + parentString + "\ncurrent:\n" + current.toString()
+                            + "\nnumMoves: " + numMoves + "\n");
+                else return ("priority = " + priority + "\nmoves = " + numMoves + "\nmanhattan = "
+                        + current.manhattan() + "\n" + current.toString());
             }
+
+
         }
 
-        StdOut.println("Starting with the following node: ");
+
+        if (initial == null) throw new IllegalArgumentException("Please supply valid board");
+
         Node firstNode = new Node(null, initial, 0);
-        StdOut.println(firstNode.toString());
+        Node firstTwin = new Node(null, initial.twin(), 0);
+        StdOut.println(
+                "Starting with the following node with priority : " + firstNode.getPriority());
+        StdOut.println(firstNode.toString(false));
+        // StdOut.println(
+        //         "Starting with the following twin with priority : " + firstTwin.getPriority());
+        // StdOut.println(firstTwin.toString(true));
+
+        int i = 0;
+        for (Board neighbor : firstNode.getCurrent().neighbors()) {
+            if (neighbor.equals(firstNode.getParent())) continue;
+            Node curChildNode = new Node(firstNode.getCurrent(), neighbor, 1);
+            StdOut.println("Neighbor: " + i++);
+            StdOut.println(curChildNode.toString(false));
+        }
 
 
     }
