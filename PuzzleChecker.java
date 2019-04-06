@@ -51,6 +51,11 @@ public class PuzzleChecker {
             Board initial = new Board(tiles);
             Solver solver = new Solver(initial);
             StdOut.println(filename + ": " + solver.moves());
+            if (solver.isSolvable()) {
+                for (Board curBoard : solver.solution()) {
+                    StdOut.println(curBoard.toString());
+                }
+            }
         }
     }
 }

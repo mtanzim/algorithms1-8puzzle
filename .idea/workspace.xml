@@ -33,8 +33,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Solver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+            <state relative-caret-position="221">
+              <caret line="146" column="60" lean-forward="true" selection-start-line="146" selection-start-column="60" selection-end-line="146" selection-end-column="60" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Board.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2254">
+              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -47,8 +56,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PuzzleChecker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
-              <caret line="31" column="28" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
+            <state relative-caret-position="217">
+              <caret line="26" selection-start-line="26" selection-end-line="26" />
             </state>
           </provider>
         </entry>
@@ -208,9 +217,9 @@
       <window_info anchor="bottom" id="TODO" order="6" show_stripe_button="false" weight="0.32904148" />
       <window_info anchor="bottom" id="CheckStyle" order="7" weight="0.3296582" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" x="1037" y="306" width="668" height="530" id="Terminal" order="9" sideWeight="0.49762782" type="WINDOWED" visible="true" weight="0.66482913" />
+      <window_info anchor="bottom" x="1037" y="306" width="668" height="530" id="Terminal" order="9" sideWeight="0.49762782" type="WINDOWED" weight="0.66482913" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50237215" side_tool="true" weight="0.41345093" />
-      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49973643" visible="true" weight="0.32745314" />
+      <window_info active="true" anchor="bottom" id="Messages" order="11" sideWeight="0.49973643" visible="true" weight="0.32745314" />
       <window_info anchor="bottom" id="FindBugs-IDEA" order="12" weight="0.1477398" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -282,13 +291,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Board.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" selection-start-line="7" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Solver.class">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -321,15 +323,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PuzzleChecker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="31" column="28" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
+        <state relative-caret-position="217">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2254">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Solver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+        <state relative-caret-position="221">
+          <caret line="146" column="60" lean-forward="true" selection-start-line="146" selection-start-column="60" selection-end-line="146" selection-end-column="60" />
         </state>
       </provider>
     </entry>

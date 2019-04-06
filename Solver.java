@@ -8,23 +8,30 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.StdOut;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
+
 
 public class Solver {
 
     private int minMoves = -1;
     private boolean isSolvable = false;
     private boolean debug = false;
+    private ArrayList<Board> solutionStack = new ArrayList<Board>();
     // private List<Board> bList = new ArrayList<Board>();
 
     private class Node {
         private Board parent;
+        private Node parentNode;
         private Board current;
         private int numMoves;
         private int priority;
 
-        public Node(Board argParent, Board argCurrent, int argNumMoves) {
-            parent = argParent;
+        public Node(Node argParent, Board argCurrent, int argNumMoves) {
+            parentNode = argParent;
+            if (parentNode != null) parent = parentNode.getCurrent();
             current = argCurrent;
             numMoves = argNumMoves;
             priority = current.manhattan() + numMoves;
@@ -40,6 +47,10 @@ public class Solver {
 
         public Board getParent() {
             return parent;
+        }
+
+        public Node getParentNode() {
+            return parentNode;
         }
 
         public int getNumMoves() {
@@ -114,22 +125,31 @@ public class Solver {
         twinPQ.insert(firstTwin);
         Node curGameNode = gamePQ.delMin();
         Node curTwinNode = twinPQ.delMin();
+
         while (!curGameNode.getCurrent().isGoal()) {
 
             if (curGameNode.getNumMoves() > 40000) break;
             curGameNode = loadPQ(gamePQ, curGameNode);
+
+
             curTwinNode = loadPQ(twinPQ, curTwinNode);
             if (curTwinNode.getCurrent().isGoal()) {
                 // StdOut.println("UNSOLVABLE!!!");
-                isSolvable = false;
                 return;
             }
 
         }
         if (debug) StdOut.println("SOLVED GAME\n" + curGameNode.toString(false));
         minMoves = curGameNode.getNumMoves();
-
+        isSolvable = true;
+        Node solvedNodeTrace = curGameNode;
+        while (solvedNodeTrace != null) {
+            solutionStack.add(solvedNodeTrace.getCurrent());
+            solvedNodeTrace = solvedNodeTrace.getParentNode();
+        }
+        Collections.reverse(solutionStack);
     }
+
 
     private Node loadPQ(MinPQ<Node> curPQ, Node curNode) {
         // StdOut.println("PQ Size: " + gamePQ.size());
@@ -140,7 +160,7 @@ public class Solver {
         // StdOut.println("===============NEIGHBORS====================");
         for (Board neighbor : curNode.getCurrent().neighbors()) {
             if (neighbor.equals(curNode.getParent())) continue;
-            Node curChildNode = new Node(curNode.getCurrent(), neighbor, curNode.getNumMoves() + 1);
+            Node curChildNode = new Node(curNode, neighbor, curNode.getNumMoves() + 1);
             // StdOut.println("Neighbor: " + i++);
             // StdOut.println(curChildNode.toString(false));
             curPQ.insert(curChildNode);
@@ -152,6 +172,17 @@ public class Solver {
         // StdOut.println(gamePQ.min().toString(false));
         // StdOut.println("===========================================");
         return curPQ.delMin();
+    }
+
+    public Iterable<Board> solution() {
+        if (!isSolvable) return null;
+        return new Iterable<Board>() {
+            @Override
+            public Iterator<Board> iterator() {
+                return solutionStack.iterator();
+            }
+        };
+
     }
 
     public int moves() {
