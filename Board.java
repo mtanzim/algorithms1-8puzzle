@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static java.lang.Math.abs;
-
 public class Board {
 
     private int[][] tiles;
@@ -147,7 +145,7 @@ public class Board {
                     int goal_x = (curTile - 1) % n;
                     int goal_y = (curTile - 1) / n;
 
-                    int curDiff = abs(j - goal_x) + abs(i - goal_y);
+                    int curDiff = Math.abs(j - goal_x) + Math.abs(i - goal_y);
                     // StdOut.println(
                     //         "curTile: " + curTile + " goal_x: " + goal_x + " goal_y: " + goal_y
                     //                 + " curDiff: " + curDiff);

@@ -128,7 +128,7 @@ public class Solver {
 
         while (!curGameNode.getCurrent().isGoal()) {
 
-            if (curGameNode.getNumMoves() > 40000) break;
+            // if (curGameNode.getNumMoves() > 40000) break;
             curGameNode = loadPQ(gamePQ, curGameNode);
 
 
