@@ -35,7 +35,7 @@ public class Board {
         return newBoard;
     }
 
-    public int dimensions() {
+    public int dimension() {
         return n;
     }
 
@@ -47,7 +47,7 @@ public class Board {
         if (obj == null) return false;
         Board that = (Board) obj;
 
-        if (that.dimensions() != n) return false;
+        if (that.dimension() != n) return false;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (that.tiles[i][j] != tiles[i][j]) return false;
